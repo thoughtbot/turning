@@ -6,9 +6,13 @@ describe Turning do
 
   it 'listens to events and renders the view to a static file' do
     controller_class = Class.new(Turning::Controller) do
-      def initialize(renderer, model)
-        super(renderer)
+      def initialize(model)
+        super()
         @model = model
+      end
+
+      def self.name
+        'ExamplesController'
       end
 
       def listen
@@ -30,14 +34,13 @@ describe Turning do
 
     create_view('examples/index.html.erb', '<%= @greeting %>')
 
-    renderer = Turning::Renderer.new('examples')
     model = model_class.new
-    controller = controller_class.new(renderer, model)
+    controller = controller_class.new(model)
 
     controller.listen
     model.trigger_update
 
-    get '/examples/index.html'
+    get '/examples/index'
     last_response.body.should == 'Hello'
   end
 

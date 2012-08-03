@@ -9,8 +9,9 @@ require 'action_controller/metal/helpers'
 
 module Turning
   class Renderer
-    def initialize(controller_path)
+    def initialize(controller_path, storage)
       @controller_path = controller_path
+      @storage = storage
       @renderable = Class.new(AbstractController::Base) {
         include AbstractController::Rendering
         include AbstractController::Layouts
@@ -45,16 +46,8 @@ module Turning
 
     def render_to_file(template_name, assigns)
       @renderable.view_assigns = assigns
-      target = target_path.join("#{template_name}.html")
       contents = @renderable.render_to_string(action: template_name)
-      FileUtils.mkdir_p(target_path)
-      File.open(target, 'w') { |file| file.write(contents) }
-    end
-
-    private
-
-    def target_path
-      Rails.root.join('public', 'static', @controller_path)
+      @storage.put("#{@controller_path}/#{template_name}", contents)
     end
   end
 end

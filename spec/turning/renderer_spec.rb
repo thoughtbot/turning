@@ -4,18 +4,20 @@ require 'turning/renderer'
 describe Turning::Renderer do
   it 'renders to a file' do
     create_view('examples/say_hello.html.erb', '<%= @greeting %>')
-    renderer = Turning::Renderer.new('examples')
+    storage = mock_storage
+    renderer = Turning::Renderer.new('examples', storage)
     renderer.render_to_file('say_hello', greeting: 'Hello')
 
-    read_static_view('examples/say_hello.html').should include 'Hello'
+    storage.should have_static_view('examples/say_hello', 'Hello')
   end
 
   it 'supplies built-in helpers' do
     create_view('examples/go_home.html.erb', '<%= link_to "go home", root_path %>')
-    renderer = Turning::Renderer.new('examples')
+    storage = mock_storage
+    renderer = Turning::Renderer.new('examples', storage)
     renderer.render_to_file('go_home', {})
 
-    read_static_view('examples/go_home.html').should match(%r{<a href=".*">go home</a>})
+    storage.should have_static_view('examples/go_home', %{<a href="/">go home</a>})
   end
 
   it 'supplies custom helpers' do
@@ -27,24 +29,34 @@ describe Turning::Renderer do
       end
     HELPER
     create_view('examples/greet_hello.html.erb', '<%= greet %>')
-    renderer = Turning::Renderer.new('examples')
+    storage = mock_storage
+    renderer = Turning::Renderer.new('examples', storage)
     renderer.render_to_file('greet_hello', {})
 
-    read_static_view('examples/greet_hello.html').should include 'Hello'
+    storage.should have_static_view('examples/greet_hello', 'Hello')
   end
 
   it 'disables forgery protection for static forms' do
     create_view('examples/form.html.erb', "<%= form_tag '/' do %><% end %>")
-    renderer = Turning::Renderer.new('examples')
+    renderer = Turning::Renderer.new('examples', mock_storage)
     expect { renderer.render_to_file('form', {}) }.not_to raise_error
   end
 
   it 'renders with a layout' do
     create_view('examples/simple.html.erb', 'Hello')
     create_view('layouts/static.html.erb', 'Check this: <%= yield %>')
-    renderer = Turning::Renderer.new('examples')
+    storage = mock_storage
+    renderer = Turning::Renderer.new('examples', storage)
     renderer.render_to_file('simple', {})
 
-    read_static_view('examples/simple.html').should == 'Check this: Hello'
+    storage.should have_static_view('examples/simple', 'Check this: Hello')
+  end
+
+  def mock_storage
+    stub('storage', put: nil)
+  end
+
+  def have_static_view(path, contents)
+    have_received(:put).with(path, contents)
   end
 end

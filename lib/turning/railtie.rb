@@ -10,5 +10,11 @@ module Turning
     initializer('turning.middleware') do
       config.app_middleware.use StaticCascade, config.turning.storage
     end
+
+    initializer('turning.url_helpers') do
+      Turning::Controller.class_eval do
+        include Rails.application.routes.url_helpers
+      end
+    end
   end
 end

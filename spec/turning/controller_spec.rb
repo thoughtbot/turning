@@ -41,6 +41,19 @@ describe Turning::Controller do
     renderer.should have_rendered('index', 'index-unassigned', {})
   end
 
+  it 'provides url helpers' do
+    concrete_controller = Class.new(Turning::Controller) do
+      def do_it
+        render 'index', root_path
+      end
+    end
+    renderer = mock_renderer
+
+    concrete_controller.new(renderer).do_it
+
+    renderer.should have_rendered('index', '/', {})
+  end
+
   def mock_renderer
     stub('mock renderer', render_to_file: nil)
   end

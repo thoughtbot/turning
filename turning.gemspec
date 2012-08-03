@@ -2,8 +2,8 @@
 require File.expand_path('../lib/turning/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Joe Ferris"]
-  gem.email         = ["jferris@thoughtbot.com"]
+  gem.authors       = ["Joe Ferris and Mike Burns"]
+  gem.email         = ["support@thoughtbot.com"]
   gem.description   = %q{The wheels in the sky keep on turning}
   gem.summary       = %q{A tiny framework to render views whenever data changes rather than re-rendering on every visit.}
 

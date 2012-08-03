@@ -2,10 +2,15 @@ require 'rails/railtie'
 require 'turning/static_cascade'
 require 'turning/file_storage'
 require 'turning/configuration'
+require 'turning/listener_loader'
 
 module Turning
   class Railtie < ::Rails::Railtie
     config.turning = Configuration.new
+
+    config.to_prepare do
+      ListenerLoader.load
+    end
 
     initializer('turning.middleware') do
       config.app_middleware.use StaticCascade, config.turning.storage

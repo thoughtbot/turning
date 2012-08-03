@@ -19,7 +19,7 @@ module Turning
     end
 
     def storage
-      FileStorage.new(Rails.root.join('public', 'static'))
+      Rails.configuration.turning.storage
     end
   end
 end

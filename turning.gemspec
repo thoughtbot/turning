@@ -22,4 +22,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'bourne'
   gem.add_development_dependency 'tzinfo'
+  gem.add_development_dependency 'rack-test'
 end

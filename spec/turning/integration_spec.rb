@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'turning'
 
 describe Turning do
+  include Rack::Test::Methods
+
   it 'listens to events and renders the view to a static file' do
     controller_class = Class.new(Turning::Controller) do
       def initialize(renderer, model)
@@ -35,6 +37,11 @@ describe Turning do
     controller.listen
     model.trigger_update
 
-    read_cached_view('examples/index.html').should == 'Hello'
+    get '/examples/index.html'
+    last_response.body.should == 'Hello'
+  end
+
+  def app
+    TestApp::Application
   end
 end

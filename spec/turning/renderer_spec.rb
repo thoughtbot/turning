@@ -7,7 +7,7 @@ describe Turning::Renderer do
     renderer = Turning::Renderer.new('examples')
     renderer.render_to_file('say_hello', greeting: 'Hello')
 
-    read_cached_view('examples/say_hello.html').should include 'Hello'
+    read_static_view('examples/say_hello.html').should include 'Hello'
   end
 
   it 'supplies built-in helpers' do
@@ -15,7 +15,7 @@ describe Turning::Renderer do
     renderer = Turning::Renderer.new('examples')
     renderer.render_to_file('go_home', {})
 
-    read_cached_view('examples/go_home.html').should match(%r{<a href=".*">go home</a>})
+    read_static_view('examples/go_home.html').should match(%r{<a href=".*">go home</a>})
   end
 
   it 'supplies custom helpers' do
@@ -30,7 +30,7 @@ describe Turning::Renderer do
     renderer = Turning::Renderer.new('examples')
     renderer.render_to_file('greet_hello', {})
 
-    read_cached_view('examples/greet_hello.html').should include 'Hello'
+    read_static_view('examples/greet_hello.html').should include 'Hello'
   end
 
   it 'disables forgery protection for static forms' do
@@ -45,6 +45,6 @@ describe Turning::Renderer do
     renderer = Turning::Renderer.new('examples')
     renderer.render_to_file('simple', {})
 
-    read_cached_view('examples/simple.html').should == 'Check this: Hello'
+    read_static_view('examples/simple.html').should == 'Check this: Hello'
   end
 end

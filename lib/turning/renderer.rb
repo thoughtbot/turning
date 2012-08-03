@@ -54,7 +54,7 @@ module Turning
     private
 
     def target_path
-      Rails.root.join('public', 'cached', @controller_path)
+      Rails.root.join('public', 'static', @controller_path)
     end
   end
 end

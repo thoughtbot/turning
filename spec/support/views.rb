@@ -7,8 +7,8 @@ module Views
     @view_files << full_path
   end
 
-  def read_cached_view(path)
-    IO.read(Rails.root.join('public', 'cached', path))
+  def read_static_view(path)
+    IO.read(Rails.root.join('public', 'static', path))
   end
 
   def cleanup_views
@@ -16,7 +16,7 @@ module Views
       FileUtils.rm_rf(view_file)
     end
 
-    FileUtils.rm_rf(Rails.root.join('public', 'cached'))
+    FileUtils.rm_rf(Rails.root.join('public', 'static'))
   end
 end
 

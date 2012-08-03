@@ -1,3 +1,12 @@
+require 'action_view'
+require 'active_support/core_ext/module/attr_internal'
+require 'active_support/log_subscriber'
+require 'abstract_controller/view_paths'
+require 'abstract_controller/rendering'
+require 'abstract_controller/layouts'
+require 'abstract_controller/helpers'
+require 'action_controller/metal/helpers'
+
 module Turning
   class Renderer
     def initialize(controller_path)
@@ -11,7 +20,7 @@ module Turning
 
         # Search for views based on the controller name
         attr_accessor :controller_path
-        self.view_paths = 'app/views'
+        self.view_paths = ActionController::Base.view_paths
 
         # Include all helpers from the application's helper paths
         def self.helpers_path

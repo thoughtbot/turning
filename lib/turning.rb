@@ -1,4 +1,4 @@
+require 'turning/version'
 require 'turning/callbacks'
-
-module Turning
-end
+require 'turning/controller'
+require 'turning/renderer'

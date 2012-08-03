@@ -35,6 +35,6 @@ describe Turning do
     controller.listen
     model.trigger_update
 
-    IO.read('public/examples/index.html').should == 'Hello'
+    read_cached_view('examples/index.html').should == 'Hello'
   end
 end

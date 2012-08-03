@@ -1,3 +1,5 @@
+require 'active_model/callbacks'
+
 module ActiveModel::Callbacks
   def on(event, &block)
     new_block = lambda { |instance| block.call(instance) }

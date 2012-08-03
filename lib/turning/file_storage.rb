@@ -22,7 +22,7 @@ module Turning
     private
 
     def resolve(file_path)
-      File.join(@root_path, file_path)
+      File.join(@root_path, "#{file_path}_contents")
     end
 
     def parent_directory(file_path)

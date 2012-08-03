@@ -17,7 +17,7 @@ describe Turning do
 
       def listen
         @model.on_update do
-          render 'index', greeting: 'Hello'
+          render 'index', '/', greeting: 'Hello'
         end
       end
     end
@@ -40,7 +40,7 @@ describe Turning do
     controller.listen
     model.trigger_update
 
-    get '/examples/index'
+    get '/'
     last_response.body.should == 'Hello'
   end
 

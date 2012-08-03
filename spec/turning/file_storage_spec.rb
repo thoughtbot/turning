@@ -13,6 +13,16 @@ describe Turning::FileStorage do
     results.should == 'awesome!'
   end
 
+  it 'caches a file at the root' do
+    root = Rails.root.join('public', 'static')
+    storage = Turning::FileStorage.new(root)
+
+    storage.put('/', 'awesome!')
+    results = storage.get('/')
+
+    results.should == 'awesome!'
+  end
+
   it 'returns nil for a file that does not exist' do
     root = Rails.root.join('public', 'static')
     getter = Turning::FileStorage.new(root)

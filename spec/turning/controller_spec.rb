@@ -18,34 +18,34 @@ describe Turning::Controller do
   it 'renders' do
     concrete_controller = Class.new(Turning::Controller) do
       def do_it
-        render 'index', greeting: 'hello'
+        render 'index', 'hello-index', greeting: 'hello'
       end
     end
     renderer = mock_renderer
 
     concrete_controller.new(renderer).do_it
 
-    renderer.should have_rendered('index', greeting: 'hello')
+    renderer.should have_rendered('index', 'hello-index', greeting: 'hello')
   end
 
   it 'renders without assigns' do
     concrete_controller = Class.new(Turning::Controller) do
       def do_it
-        render 'index'
+        render 'index', 'index-unassigned'
       end
     end
     renderer = mock_renderer
 
     concrete_controller.new(renderer).do_it
 
-    renderer.should have_rendered('index', {})
+    renderer.should have_rendered('index', 'index-unassigned', {})
   end
 
   def mock_renderer
     stub('mock renderer', render_to_file: nil)
   end
 
-  def have_rendered(template_name, assigns)
-    have_received(:render_to_file).with(template_name, assigns)
+  def have_rendered(template_name, path, assigns)
+    have_received(:render_to_file).with(template_name, path, assigns)
   end
 end

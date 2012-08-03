@@ -44,10 +44,10 @@ module Turning
       @renderable.controller_path = @controller_path
     end
 
-    def render_to_file(template_name, assigns)
+    def render_to_file(template_name, path, assigns)
       @renderable.view_assigns = assigns
       contents = @renderable.render_to_string(action: template_name)
-      @storage.put("#{@controller_path}/#{template_name}", contents)
+      @storage.put(path, contents)
     end
   end
 end

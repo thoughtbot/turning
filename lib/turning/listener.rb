@@ -1,5 +1,5 @@
 module Turning
-  class Controller
+  class Listener
     def initialize(renderer = nil)
       @renderer = renderer || default_renderer
     end
@@ -15,7 +15,7 @@ module Turning
     end
 
     def view_path
-      self.class.name.underscore.sub(/_controller$/, '')
+      self.class.name.underscore.sub(/_listener$/, '')
     end
 
     def storage

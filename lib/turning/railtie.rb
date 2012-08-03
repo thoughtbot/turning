@@ -12,7 +12,7 @@ module Turning
     end
 
     initializer('turning.url_helpers') do
-      Turning::Controller.class_eval do
+      Turning::Listener.class_eval do
         include Rails.application.routes.url_helpers
       end
     end

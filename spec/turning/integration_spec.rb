@@ -5,14 +5,14 @@ describe Turning do
   include Rack::Test::Methods
 
   it 'listens to events and renders the view to a static file' do
-    controller_class = Class.new(Turning::Controller) do
+    listener_class = Class.new(Turning::Listener) do
       def initialize(model)
         super()
         @model = model
       end
 
       def self.name
-        'ExamplesController'
+        'ExamplesListener'
       end
 
       def listen
@@ -35,9 +35,9 @@ describe Turning do
     create_view('examples/index.html.erb', '<%= @greeting %>')
 
     model = model_class.new
-    controller = controller_class.new(model)
+    listener = listener_class.new(model)
 
-    controller.listen
+    listener.listen
     model.trigger_update
 
     get '/'

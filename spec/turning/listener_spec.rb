@@ -1,55 +1,55 @@
 require 'spec_helper'
-require 'turning/controller'
+require 'turning/listener'
 
-describe Turning::Controller do
+describe Turning::Listener do
   it 'sets up a listener' do
     listening = false
-    concrete_controller = Class.new(Turning::Controller) do
+    concrete_listener = Class.new(Turning::Listener) do
       define_method :listen do
         listening = true
       end
     end
 
-    concrete_controller.new(mock_renderer).listen
+    concrete_listener.new(mock_renderer).listen
 
     listening.should be
   end
 
   it 'renders' do
-    concrete_controller = Class.new(Turning::Controller) do
+    concrete_listener = Class.new(Turning::Listener) do
       def do_it
         render 'index', 'hello-index', greeting: 'hello'
       end
     end
     renderer = mock_renderer
 
-    concrete_controller.new(renderer).do_it
+    concrete_listener.new(renderer).do_it
 
     renderer.should have_rendered('index', 'hello-index', greeting: 'hello')
   end
 
   it 'renders without assigns' do
-    concrete_controller = Class.new(Turning::Controller) do
+    concrete_listener = Class.new(Turning::Listener) do
       def do_it
         render 'index', 'index-unassigned'
       end
     end
     renderer = mock_renderer
 
-    concrete_controller.new(renderer).do_it
+    concrete_listener.new(renderer).do_it
 
     renderer.should have_rendered('index', 'index-unassigned', {})
   end
 
   it 'provides url helpers' do
-    concrete_controller = Class.new(Turning::Controller) do
+    concrete_listener = Class.new(Turning::Listener) do
       def do_it
         render 'index', root_path
       end
     end
     renderer = mock_renderer
 
-    concrete_controller.new(renderer).do_it
+    concrete_listener.new(renderer).do_it
 
     renderer.should have_rendered('index', '/', {})
   end

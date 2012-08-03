@@ -52,6 +52,15 @@ describe Turning::Renderer do
     storage.should have_static_view('/examples/simple', 'Check this: Hello')
   end
 
+  it 'provides an action name' do
+    create_view('examples/example_template.html.erb', '<%= controller.action_name %>')
+    storage = mock_storage
+    renderer = Turning::Renderer.new('examples', storage)
+    renderer.render_to_file('example_template', '/examples/example_template', {})
+
+    storage.should have_static_view('/examples/example_template', 'example_template')
+  end
+
   def mock_storage
     stub('storage', put: nil)
   end

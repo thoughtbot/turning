@@ -40,12 +40,16 @@ module Turning
           'StaticController'
         end
         layout nil
+
+        # So that controller.action_name continues to work
+        attr_accessor :action_name
       }.new
       @renderable.controller_path = @controller_path
     end
 
     def render_to_file(template_name, path, assigns)
       @renderable.view_assigns = assigns
+      @renderable.action_name = template_name
       contents = @renderable.render_to_string(action: template_name)
       @storage.put(path, contents)
     end

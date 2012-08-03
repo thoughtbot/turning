@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Joe Ferris"]
   gem.email         = ["jferris@thoughtbot.com"]
   gem.description   = %q{The wheels in the sky keep on turning}
-  gem.summary       = %q{Wheels keep on spinning round, spinning round, spinning round}
+  gem.summary       = %q{A tiny framework to render views whenever data changes rather than re-rendering on every visit.}
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
